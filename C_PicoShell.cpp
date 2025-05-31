@@ -230,8 +230,8 @@ int C_PicoShell::command2packet(int nCommand, std::string sParam){
       case ECOMMAND::COM_MKDIR:   aBuffer[p++] = MKD; bParam = true; break;
       case ECOMMAND::COM_TOUCH:   aBuffer[p++] = MKF; bParam = true; break;
 
-      case ECOMMAND::COM_RBP2USB: aBuffer[p++] = COM; aBuffer[p++] = CPS_REBOOT; break;
-      case ECOMMAND::COM_RBP:     aBuffer[p++] = COM; aBuffer[p++] = CPS_RB2USB; break;
+      case ECOMMAND::COM_RBP2USB: aBuffer[p++] = COM; aBuffer[p++] = CPS_RB2USB; break;
+      case ECOMMAND::COM_RBP:     aBuffer[p++] = COM; aBuffer[p++] = CPS_REBOOT; break;
 
       case ECOMMAND::COM_ULF:     return(upload(sParam));
       case ECOMMAND::COM_DLF:     return(download(sParam));
