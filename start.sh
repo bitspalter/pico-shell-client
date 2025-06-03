@@ -1,2 +1,2 @@
-g++ -o pico-shell-client *.cpp
+g++ -o picoshell-client *.cpp
 
