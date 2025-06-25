@@ -148,7 +148,6 @@ void C_PicoShell::recive(){
                std::cout << "+";
             }else{
 
-
                size_t pos;
 
                if((pos = sBuffer.find("[directory]")) != std::string::npos){
@@ -171,8 +170,6 @@ void C_PicoShell::recive(){
                      sSize.pop_back();
                      sSize.pop_back();
 
-                     //sSize = sSize.erase(sSize.end() - 1);
-
                      std::cout << GREEN << std::right << std::setw(10) << " " << sSize << WHITE << " byte";
                   }
 
@@ -182,13 +179,6 @@ void C_PicoShell::recive(){
 
                   std::cout << BOLD BGBLUE WHITE << sBuffer << RESET << std::endl;
                }
-
-
-               
-
-               
-
-
             }
          }
       }
