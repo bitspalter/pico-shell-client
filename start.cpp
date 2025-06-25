@@ -64,6 +64,14 @@ int main(int argc, char* argv[]){
 
    //////////////
 
+   std::cout << CLEAR;
+
+   cursorXY(0, 0);
+
+   std::cout << GREEN << "PicoShell 0.1" << RESET << std::endl;
+
+   //////////////
+
    while(true){
 
       std::string sBuffer = "";
@@ -101,7 +109,7 @@ void NCallback(struct inotify_event* pEvent){
 
          if(sFile.compare(pEvent->name) == 0){
 
-            std::cout << "Pico is added" << std::endl;
+            std::cout << GREEN << "Pico is added" << RESET << std::endl;
 
             std::this_thread::sleep_for(1000ms);
 
@@ -121,7 +129,7 @@ void NCallback(struct inotify_event* pEvent){
 
          if(sFile.compare(pEvent->name) == 0){
 
-            std::cout << "Pico is removed" << std::endl;
+            std::cout << RED << "Pico is removed" << RESET << std::endl;
 
             CShell.stop();
             CSerial.close();

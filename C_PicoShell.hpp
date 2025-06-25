@@ -148,6 +148,41 @@ typedef enum {
     {"rbp",     COM_RBP}
  };
 
+ //the following are LINUX and MacOS ONLY terminal color codes
+ 
+ #define cursorXY(x,y) printf("\033[%d;%dH",(x),(y))
+
+ #define TESTT       "\033[0;0H"
+
+ #define CLEAR       "\033[2J"
+
+ #define RESET       "\033[0m"
+ #define BOLD        "\033[1m"
+ #define UNDERLINE   "\033[4m"
+ #define BLINK       "\033[5m"
+ #define INVERTED    "\033[7m"
+ #define HIDDEN      "\033[8m"
+
+ #define BLACK       "\033[30m"
+ #define RED         "\033[31m"
+ #define GREEN       "\033[32m"
+ #define YELLOW      "\033[33m"
+ #define BLUE        "\033[34m"
+ #define MAGENTA     "\033[35m"
+ #define CYAN        "\033[36m"
+ #define WHITE       "\033[37m"
+
+ #define BGBLACK     "\033[40m"
+ #define BGRED       "\033[41m"
+ #define BGGREEN     "\033[42m"
+ #define BGYELLOW    "\033[43m"
+ #define BGBLUE      "\033[44m"
+ #define BGMAGENTA   "\033[45m"
+ #define BGCYAN      "\033[46m"
+ #define BGWHITE     "\033[47m"
+
+
+
 /////////////////////////////////////////////////////////////////////////
 // CLASS
 /////////////////////////////////////////////////////////////////////////

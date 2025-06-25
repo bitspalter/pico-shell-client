@@ -122,7 +122,7 @@ void C_PicoShell::recive(){
 
             }else{
 
-               std::cout << sText << std::endl;
+               std::cout << GREEN << sText << RESET << std::endl;
             }
 
             sBuffer.clear();
@@ -138,7 +138,7 @@ void C_PicoShell::recive(){
 
             u_long error = stoul(sNumber);
 
-            std::cout << "error: " << error << " - " << error2string(error) << std::endl;
+            std::cout << RED << "error: " << error << " - " << error2string(error) << RESET << std::endl;
 
          }else{
 
@@ -147,7 +147,48 @@ void C_PicoShell::recive(){
             if(bUpload){
                std::cout << "+";
             }else{
-               std::cout << sBuffer << std::endl;
+
+
+               size_t pos;
+
+               if((pos = sBuffer.find("[directory]")) != std::string::npos){
+
+                  std::cout << YELLOW << sBuffer.substr(0, pos) << RESET << std::endl;
+
+               }else
+               if((pos = sBuffer.find("[writable file]")) != std::string::npos){
+
+                  std::cout << CYAN << sBuffer.substr(0, pos);
+
+                  std::cout << WHITE << std::left << std::setfill(' ') << std::setw(10) << " ";
+                  
+                  size_t posSize;
+
+                  if((posSize = sBuffer.find("[size=")) != std::string::npos){
+
+                     std::string sSize = sBuffer.substr(posSize + 6);
+
+                     sSize.pop_back();
+                     sSize.pop_back();
+
+                     //sSize = sSize.erase(sSize.end() - 1);
+
+                     std::cout << GREEN << std::right << std::setw(10) << " " << sSize << WHITE << " byte";
+                  }
+
+                  std::cout << RESET << std::endl;
+
+               }else{
+
+                  std::cout << BOLD BGBLUE WHITE << sBuffer << RESET << std::endl;
+               }
+
+
+               
+
+               
+
+
             }
          }
       }
@@ -178,7 +219,7 @@ int C_PicoShell::command(std::string sCommand){
    int Result = command2number(sCommand);
 
    if(Result == C_PICOSHELL_NOT_FOUND){
-      std::cout << "Unknown Command: " << sCommand << std::endl;
+      std::cout << RED << "Unknown Command: " << sCommand << RESET << std::endl;
       return(C_PICOSHELL_NOT_FOUND);
    }else
    if(Result == ECOMMAND::COM_HELP){
@@ -243,7 +284,7 @@ int C_PicoShell::command2packet(int nCommand, std::string sParam){
       p += sprintf(&aBuffer[p], "%s", sParam.c_str());
    }else
    if(bParam){
-      std::cout << "ERROR - Commando need a parameter" << std::endl;
+      std::cout << RED << "ERROR - Commando need a parameter" << RESET << std::endl;
       return(C_PICOSHELL_ERROR);
    }
 
@@ -360,6 +401,8 @@ int C_PicoShell::upload(std::string sPath){
 
    file.seekg(0, std::ios_base::beg);
 
+   std::cout << "file size: " << Size << std::endl;
+
    ////////////////////////////////////////////////
 
    std::vector<char> vBuffer;
@@ -368,10 +411,15 @@ int C_PicoShell::upload(std::string sPath){
 
    file.read(vBuffer.data(), Size);
 
+   std::cout << "file size: " << vBuffer.data() << std::endl;
+
    ///////////////////////////////////////////////
 
    std::string temp = vBuffer.data();
    std::string shex = ascii2hex(temp);
+
+   std::cout << "temp: " << temp.size() << std::endl;
+   std::cout << "shex: " << shex.size() << std::endl;
 
    ///////////////////////////////////////////////
 
@@ -411,7 +459,6 @@ int C_PicoShell::upload(std::string sPath){
       aBuffer[p++] = HXS;
 
       p += sprintf(&aBuffer[p], "%02x", nhex.length() + part.length());
-
       p += sprintf(&aBuffer[p], "%s", nhex.c_str());
       p += sprintf(&aBuffer[p], "%s", part.c_str());
 
@@ -424,12 +471,10 @@ int C_PicoShell::upload(std::string sPath){
          return(C_PICOSHELL_ERROR);
       }
 
-      std::this_thread::sleep_for(10ms);
+      std::this_thread::sleep_for(20ms);
    }
 
    /////////////////////
-
-   bUpload = false;
 
    if(cRest){
 
@@ -454,7 +499,11 @@ int C_PicoShell::upload(std::string sPath){
          bUpload = false;
          return(C_PICOSHELL_ERROR);
       }
+
+      std::this_thread::sleep_for(20ms);
    }
+
+   bUpload = false;
 
    ///////////////////////////////////////////////
 
@@ -508,7 +557,8 @@ void C_PicoShell::help(){
    std::cout << "rbp        - reboot pico"              << std::endl;
    std::cout << "rbp2usb    - reboot pico as usb drive" << std::endl;
 
-   std::cout << "only available if a data storage is attached to the pico" 
+   std::cout << std::endl 
+             << "only available if a data storage is attached to the pico" 
              << std::endl << std::endl;
 
    std::cout << "ls         - list working directory"   << std::endl;

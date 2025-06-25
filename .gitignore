@@ -1,1 +1,7 @@
 picoshell-client
+*.tmp
+*.js
+*.html
+*.css
+*.log
+*.txt
