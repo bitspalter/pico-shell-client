@@ -157,7 +157,7 @@ void C_PicoShell::recive(){
                }else
                if((pos = sBuffer.find("[writable file]")) != std::string::npos){
 
-                  std::cout << CYAN << sBuffer.substr(0, pos);
+                  std::cout << CYAN << std::left << std::setw(15) << sBuffer.substr(0, pos);
 
                   std::cout << WHITE << std::left << std::setfill(' ') << std::setw(10) << " ";
                   
@@ -170,7 +170,7 @@ void C_PicoShell::recive(){
                      sSize.pop_back();
                      sSize.pop_back();
 
-                     std::cout << GREEN << std::right << std::setw(10) << " " << sSize << WHITE << " byte";
+                     std::cout << GREEN << std::right << std::setfill(' ') << std::setw(10) << sSize << WHITE << " byte";
                   }
 
                   std::cout << RESET << std::endl;
@@ -391,25 +391,20 @@ int C_PicoShell::upload(std::string sPath){
 
    file.seekg(0, std::ios_base::beg);
 
-   std::cout << "file size: " << Size << std::endl;
-
    ////////////////////////////////////////////////
 
    std::vector<char> vBuffer;
 
-   vBuffer.resize(Size);
+   vBuffer.resize(Size + 1);
 
    file.read(vBuffer.data(), Size);
 
-   std::cout << "file size: " << vBuffer.data() << std::endl;
+   vBuffer[Size] = 0x00; // TEST
 
    ///////////////////////////////////////////////
 
    std::string temp = vBuffer.data();
    std::string shex = ascii2hex(temp);
-
-   std::cout << "temp: " << temp.size() << std::endl;
-   std::cout << "shex: " << shex.size() << std::endl;
 
    ///////////////////////////////////////////////
 

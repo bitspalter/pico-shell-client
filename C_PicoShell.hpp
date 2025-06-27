@@ -149,7 +149,7 @@ typedef enum {
  };
 
  //the following are LINUX and MacOS ONLY terminal color codes
- 
+
  #define cursorXY(x,y) printf("\033[%d;%dH",(x),(y))
 
  #define TESTT       "\033[0;0H"
@@ -180,8 +180,6 @@ typedef enum {
  #define BGMAGENTA   "\033[45m"
  #define BGCYAN      "\033[46m"
  #define BGWHITE     "\033[47m"
-
-
 
 /////////////////////////////////////////////////////////////////////////
 // CLASS
